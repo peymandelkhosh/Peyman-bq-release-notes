@@ -1,6 +1,20 @@
 let currentNotes = [];
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Theme toggle setup
+    const themeBtn = document.getElementById('theme-btn');
+    const currentTheme = localStorage.getItem('theme');
+    
+    if (currentTheme === 'light') {
+        document.body.classList.add('light-mode');
+    }
+
+    themeBtn.addEventListener('click', () => {
+        document.body.classList.toggle('light-mode');
+        const theme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
+        localStorage.setItem('theme', theme);
+    });
+
     fetchNotes();
 
     const refreshBtn = document.getElementById('refresh-btn');
