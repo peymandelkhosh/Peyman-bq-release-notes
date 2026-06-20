@@ -251,13 +251,14 @@ body {
     font-size: 0.9em;
 }
 
-/* Tweet Button */
+/* Tweet & Copy Actions */
 .card-actions {
     margin-top: 1.5rem;
     padding-top: 1rem;
     border-top: 1px solid var(--card-border);
     display: flex;
     justify-content: flex-end;
+    gap: 0.75rem;
 }
 
 .tweet-btn {
@@ -284,3 +285,36 @@ body {
     height: 18px;
     fill: currentColor;
 }
+
+.copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--card-border);
+    color: var(--text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.copy-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.copy-btn.copied {
+    background: #10b981;
+    border-color: #10b981;
+    color: white;
+}
+
+.copy-icon {
+    width: 18px;
+    height: 18px;
+}
+
