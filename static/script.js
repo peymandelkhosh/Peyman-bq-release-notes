@@ -1,3 +1,5 @@
+let currentNotes = [];
+
 document.addEventListener('DOMContentLoaded', () => {
     fetchNotes();
 
@@ -9,6 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 refreshBtn.classList.remove('spinning');
             }, 500); // Give it a slight delay to ensure smooth spin animation end
         });
+    });
+
+    const exportBtn = document.getElementById('export-btn');
+    exportBtn.addEventListener('click', () => {
+        if (currentNotes.length === 0) {
+            alert('No release notes available to export.');
+            return;
+        }
+        exportToCSV(currentNotes);
     });
 });
 
@@ -32,6 +43,7 @@ async function fetchNotes() {
         }
         
         const notes = await response.json();
+        currentNotes = notes;
         
         loader.classList.add('hidden');
         container.classList.remove('hidden');
@@ -116,4 +128,40 @@ async function fetchNotes() {
             </div>
         `;
     }
+}
+
+function htmlToPlainText(html) {
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+    return temp.innerText || temp.textContent || '';
+}
+
+function exportToCSV(notes) {
+    const headers = ['Date', 'Title', 'Link', 'Content'];
+    const rows = notes.map(note => {
+        const date = new Date(note.published);
+        const formattedDate = !isNaN(date) ? date.toLocaleDateString('en-US') : note.published;
+        const plainContent = htmlToPlainText(note.content);
+        
+        // Escape double quotes by doubling them, and wrap each field in double quotes
+        return [
+            `"${formattedDate.replace(/"/g, '""')}"`,
+            `"${note.title.replace(/"/g, '""')}"`,
+            `"${note.link.replace(/"/g, '""')}"`,
+            `"${plainContent.trim().replace(/"/g, '""')}"`
+        ];
+    });
+    
+    // Add headers and join rows
+    const csvContent = "\uFEFF" + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `bigquery_release_notes_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
