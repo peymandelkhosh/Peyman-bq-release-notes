@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigQuery Release Notes Explorer</title>
+    <meta name="description" content="Stay up to date with the latest features, improvements, and bug fixes for Google Cloud BigQuery.">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+    
+    <header class="glass-header">
+        <div class="container header-container">
+            <div class="header-text">
+                <h1>BigQuery Release Notes</h1>
+                <p>Latest updates, features, and fixes straight from Google Cloud</p>
+            </div>
+            <button id="refresh-btn" class="refresh-btn" title="Refresh Notes">
+                <svg class="refresh-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.59-9.5l5.8 5.8"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        <div id="loader-wrapper">
+            <div class="spinner"></div>
+            <p>Fetching the latest notes...</p>
+        </div>
+        
+        <div id="notes-container" class="notes-container hidden">
+            <!-- Notes will be injected here via JavaScript -->
+        </div>
+    </main>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
